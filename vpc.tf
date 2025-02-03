@@ -32,7 +32,7 @@ resource "aws_subnet" "private_subnet" {
   cidr_block        = cidrsubnet(aws_vpc.custom_vpc.cidr_block, 8, count.index + 11)
   availability_zone = element(var.vpc_availability_zone, count.index)
   tags = {
-    Name = "Custom Private Subnet${count.index + 1}",
+    Name = "Custom private Subnet${count.index + 1}",
   }
 }
 

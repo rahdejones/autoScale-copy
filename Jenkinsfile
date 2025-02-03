@@ -104,6 +104,8 @@ pipeline {
         }
 
 
+    }
+
     stage('Terraform Destroy') {
     steps {
         script {
@@ -136,7 +138,7 @@ pipeline {
         }
     }
 }
-}
+
 // Function to Create a Jira Ticket
 def createJiraTicket(String issueTitle, String issueDescription) {
     script {
