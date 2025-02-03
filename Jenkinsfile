@@ -2,9 +2,9 @@ pipeline {
     agent any
     environment {
         AWS_REGION = 'us-east-1'
-        SONARQUBE_URL = "http://your-sonarqube-server:9000"
+        SONARQUBE_URL = " https://sonarcloud.io"
         TRUFFLEHOG_PATH = "/usr/local/bin/trufflehog"
-        JIRA_SITE = "https://yourcompany.atlassian.net"
+        JIRA_SITE = "https://derrickweil.atlassian.net"
         JIRA_PROJECT = "SEC" // Your Jira project key
     }
 
