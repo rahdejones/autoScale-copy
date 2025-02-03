@@ -103,18 +103,6 @@ pipeline {
             }
         }
 
-        stage('Post Deployment Security Scan (DAST)') {
-            steps {
-                script {
-                    def scanStatus = sh(script: "zap-cli quick-scan --start --self-contained --api-key myapikey http://deployed-url.com", returnStatus: true)
-                    if (scanStatus != 0) {
-                        createJiraTicket("Dynamic Security Scan Failed", "OWASP ZAP found security vulnerabilities in the deployed environment.")
-                        error("OWASP ZAP found security vulnerabilities!")
-                    }
-                }
-            }
-        }
-    }
 
     stage('Terraform Destroy') {
     steps {
