@@ -34,14 +34,13 @@ pipeline {
             steps {
                 script {
                     withCredentials([string(credentialsId: 'SONARQUBE_TOKEN', variable: 'SONAR_TOKEN')]) {
-                        def scanStatus = sh(script: """
+                        def scanStatus = sh(script: '''
                             ${SONAR_SCANNER_HOME}/bin/sonar-scanner \
                             -Dsonar.projectKey=derrickSh43_autoScale \
                             -Dsonar.organization=derricksh43 \
                             -Dsonar.host.url=${SONARQUBE_URL} \
-                            -Dsonar.login=$SONAR_TOKEN
-                        """, returnStatus: true)
-                        
+                            -Dsonar.login=''' + SONAR_TOKEN, returnStatus: true)
+
                         if (scanStatus != 0) {
                             createJiraTicket("Static Code Analysis Failed", "SonarQube scan detected issues in your code.")
                             error("SonarQube found security vulnerabilities!")
