@@ -111,16 +111,16 @@ pipeline {
             script {
                 input message: 'Are you sure you want to destroy the infrastructure?', ok: 'Proceed with Destroy'
 
-                withCredentials([[
+                 withCredentials([[
                     $class: 'AmazonWebServicesCredentialsBinding',
                     credentialsId: 'AWS_SECRET_ACCESS_KEY'
                 ]]) {
                     sh '''
                     export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
                     export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
-                    terraform destroy -auto-approve tfplan
+                    terraform apply -auto-approve tfplan
                     '''
-                
+                }
                 }
             }
         }
