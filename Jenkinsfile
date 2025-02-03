@@ -3,7 +3,7 @@ pipeline {
     environment {
         AWS_REGION = 'us-east-1'
         SONARQUBE_URL = "https://sonarcloud.io"
-        TRUFFLEHOG_PATH = "/usr/local/bin/trufflehog"
+        TRUFFLEHOG_PATH = "/usr/local/bin/trufflehog3"
         JIRA_SITE = "https://derrickweil.atlassian.net"
         JIRA_PROJECT = "SCRUM" // Your Jira project key
     }
@@ -55,7 +55,7 @@ pipeline {
         stage('Secret Scanning') {
             steps {
                 script {
-                    def scanStatus = sh(script: "${TRUFFLEHOG_PATH} --regex --entropy=True .", returnStatus: true)
+                    def scanStatus = sh(script: "$HOME/.local/bin/trufflehog3 --regex --entropy=True .", returnStatus: true)
                     if (scanStatus != 0) {
                         createJiraTicket("Secret Scan Failed", "TruffleHog detected sensitive information in the repository.")
                         error("TruffleHog found secrets in your code!")
@@ -63,6 +63,7 @@ pipeline {
                 }
             }
         }
+
 
         stage('Plan Terraform') {
             steps {
