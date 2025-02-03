@@ -63,6 +63,14 @@ pipeline {
         }
 
 
+        stage('Initialize Terraform') {
+            steps {
+                sh '''
+                terraform init
+                '''
+            }
+        }
+
 
         stage('Plan Terraform') {
             steps {
