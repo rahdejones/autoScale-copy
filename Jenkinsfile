@@ -51,20 +51,17 @@ pipeline {
         }
 
 
-        stage('Secret Scanning') {
+        stage('Dependency Scanning') {
             steps {
                 script {
-                    sh "trufflehog3 --version"
-                    def scanStatus = sh(script: "trufflehog3 --regex --entropy=True .", returnStatus: true)
-
+                    def scanStatus = sh(script: "snyk test --all-projects", returnStatus: true)
                     if (scanStatus != 0) {
-                        createJiraTicket("Secret Scan Failed", "TruffleHog detected sensitive information in the repository.")
-                        error("TruffleHog found secrets in your code!")
+                        createJiraTicket("Dependency Scan Failed", "Snyk found security vulnerabilities in dependencies.")
+                        error("Snyk detected vulnerabilities!")
                     }
                 }
             }
         }
-
 
 
 
