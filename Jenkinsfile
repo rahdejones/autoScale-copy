@@ -55,11 +55,11 @@ pipeline {
         stage('Secret Scanning') {
             steps {
                 script {
-                    sh 'echo "Using TruffleHog3 from: $(which trufflehog3)"'  // Use single quotes to avoid Groovy interpreting $
-                    sh "trufflehog3 --version"
+                    sh 'echo "Using TruffleHog3 from: $HOME/.local/bin/trufflehog3"'
+                    sh "$HOME/.local/bin/trufflehog3 --version"
 
                     // Capture TruffleHog's exit status
-                    def scanStatus = sh(script: "trufflehog3 --regex --entropy=True .", returnStatus: true)
+                    def scanStatus = sh(script: "$HOME/.local/bin/trufflehog3 --regex --entropy=True .", returnStatus: true)
 
                     // Check if secrets were found
                     if (scanStatus != 0) {
