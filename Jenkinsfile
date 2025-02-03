@@ -55,7 +55,13 @@ pipeline {
         stage('Secret Scanning') {
             steps {
                 script {
-                    def scanStatus = sh(script: "$HOME/.local/bin/trufflehog3 --regex --entropy=True .", returnStatus: true)
+                    sh "echo 'Using TruffleHog3 from: $(which trufflehog3)'"
+                    sh "trufflehog3 --version"
+                    
+                    // Capture TruffleHog's exit status
+                    def scanStatus = sh(script: "trufflehog3 --regex --entropy=True .", returnStatus: true)
+
+                    // Check if secrets were found
                     if (scanStatus != 0) {
                         createJiraTicket("Secret Scan Failed", "TruffleHog detected sensitive information in the repository.")
                         error("TruffleHog found secrets in your code!")
@@ -63,6 +69,7 @@ pipeline {
                 }
             }
         }
+
 
 
         stage('Plan Terraform') {
