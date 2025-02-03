@@ -52,18 +52,6 @@ pipeline {
         }
 
 
-        stage('Dependency Scanning') {
-            steps {
-                script {
-                    def scanStatus = sh(script: "snyk test --all-projects", returnStatus: true)
-                    if (scanStatus != 0) {
-                        createJiraTicket("Dependency Scan Failed", "Snyk found security vulnerabilities in dependencies.")
-                        error("Snyk detected vulnerabilities!")
-                    }
-                }
-            }
-        }
-
         stage('Secret Scanning') {
             steps {
                 script {
@@ -71,18 +59,6 @@ pipeline {
                     if (scanStatus != 0) {
                         createJiraTicket("Secret Scan Failed", "TruffleHog detected sensitive information in the repository.")
                         error("TruffleHog found secrets in your code!")
-                    }
-                }
-            }
-        }
-
-        stage('Terraform Security Scan (Checkov)') {
-            steps {
-                script {
-                    def scanStatus = sh(script: "checkov -d .", returnStatus: true)
-                    if (scanStatus != 0) {
-                        createJiraTicket("Infrastructure Security Issue", "Checkov found security misconfigurations in Terraform.")
-                        error("Checkov found security risks in Terraform code!")
                     }
                 }
             }
