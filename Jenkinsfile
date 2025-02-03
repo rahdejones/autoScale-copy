@@ -35,8 +35,8 @@ pipeline {
                 script {
                     def scanStatus = sh(script: """
                         ${SONAR_SCANNER_HOME}/bin/sonar-scanner \
-                        -Dsonar.projectKey=autoScale \
-                        -Dsonar.organization=your-sonarcloud-org-key \
+                        -Dsonar.projectKey=derrickSh43_autoScale \
+                        -Dsonar.organization=derrickSh43 \
                         -Dsonar.host.url=${SONARQUBE_URL} \
                         -Dsonar.login=${SONARQUBE_TOKEN}
                     """, returnStatus: true)
