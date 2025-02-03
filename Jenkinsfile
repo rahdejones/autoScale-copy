@@ -33,7 +33,14 @@ pipeline {
         stage('Static Code Analysis (SAST)') {
             steps {
                 script {
-                    def scanStatus = sh(script: "${SONAR_SCANNER_HOME}/bin/sonar-scanner -Dsonar.projectKey=autoScale -Dsonar.host.url=${SONARQUBE_URL}", returnStatus: true)
+                    def scanStatus = sh(script: """
+                        ${SONAR_SCANNER_HOME}/bin/sonar-scanner \
+                        -Dsonar.projectKey=autoScale \
+                        -Dsonar.organization=your-sonarcloud-org-key \
+                        -Dsonar.host.url=${SONARQUBE_URL} \
+                        -Dsonar.login=${SONARQUBE_TOKEN}
+                    """, returnStatus: true)
+                    
                     if (scanStatus != 0) {
                         createJiraTicket("Static Code Analysis Failed", "SonarQube scan detected issues in your code.")
                         error("SonarQube found security vulnerabilities!")
@@ -41,6 +48,7 @@ pipeline {
                 }
             }
         }
+
 
 
         stage('Dependency Scanning') {
