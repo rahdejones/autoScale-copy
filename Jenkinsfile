@@ -136,7 +136,7 @@ pipeline {
         }
     }
 }
-
+}
 // Function to Create a Jira Ticket
 def createJiraTicket(String issueTitle, String issueDescription) {
     script {
@@ -147,5 +147,4 @@ def createJiraTicket(String issueTitle, String issueDescription) {
                      description: issueDescription,
                      priority: "High"
     }
-}
 }
