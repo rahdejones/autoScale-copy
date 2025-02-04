@@ -37,7 +37,7 @@ pipeline {
                 ]]) {
                     sh '''
                     export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
-                    export AWS-Jenkins-Integration=$AWS-Jenkins-Integration
+                    export AWS_Jenkins_Integration=$AWS_Jenkins_Integration
                     terraform plan -out=tfplan
                     '''
                 }
@@ -52,7 +52,7 @@ pipeline {
                 ]]) {
                     sh '''
                     export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
-                    export AWS-Jenkins-Integration=$AWS-Jenkins-Integration
+                    export AWS_Jenkins_Integration=$AWS_Jenkins_Integration
                     terraform apply -auto-approve tfplan
                     '''
                 }
